@@ -1,7 +1,8 @@
 version: '2'
 services:
     test:
-        build: .
+        context: .
+        dockerfile: /test/Dockerfile
         container_name: "test"
         environment:
             - FOO=bar
