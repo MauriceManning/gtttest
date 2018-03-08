@@ -1,11 +1,9 @@
 version: '2'
 services:
-    publish:
+    test:
         build: .
-        container_name: "publish"
-        image: debian/latest
+        container_name: "test"
         environment:
-            - NODE_ENV=development
             - FOO=bar
         volumes:
             - .:/var/www:rw
