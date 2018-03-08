@@ -2,6 +2,8 @@ version: '2'
 services:
     test:
         context: .
+        build: /test
+        image: test:1.0
         dockerfile: /test/Dockerfile
         container_name: "test"
         environment:
