@@ -1,0 +1,49 @@
+version: '2'
+services:
+    publish:
+        build: .
+        container_name: "publish"
+        image: debian/latest
+        environment:
+            - NODE_ENV=development
+            - FOO=bar
+        volumes:
+            - .:/var/www:rw
+            - /tmp/.X11-unix:/tmp/.X11-unix:rw
+        ports:
+            - 3000:3000
+            - 9000:9000
+        links:
+            - mongodb
+        depends_on:
+            - mongodb
+    mongodb:
+        image: bitnami/mongodb:latest
+        container_name: "mongodb"
+        environment:
+          - MONGO_DATA_DIR=/data/db
+          - MONGO_LOG_DIR=/dev/null
+          - MONGODB_USERNAME=gtt
+          - MONGODB_PASSWORD=gtt123
+          - MONGODB_DATABASE=ingestdb
+        volumes:
+          - /Users/mauricemanning/Dev/data/mongodb:/bitnami
+        ports:
+            - 27017:27017
+        command: mongod --smallfiles --logpath=/dev/null # --quiet
+        
+
+    postgres:
+      restart: always
+      image: 'bitnami/postgresql:latest'
+      ports:
+        - "5432:5432"
+      environment:
+        - POSTGRES_USER=gtt
+        - POSTGRES_PASSWORD=gtt123
+        - POSTGRES_DB: accounts
+      volumes:
+        - /Users/mauricemanning/Dev/data/postgres:/var/lib/postgresql        
+        
+        
+        
