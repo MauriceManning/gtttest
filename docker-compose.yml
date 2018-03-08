@@ -7,8 +7,7 @@ services:
         environment:
             - FOO=bar
         volumes:
-            - .:/var/www:rw
-            - /tmp/.X11-unix:/tmp/.X11-unix:rw
+            - /test/:/code/test/:rw
         ports:
             - 3000:3000
             - 9000:9000
