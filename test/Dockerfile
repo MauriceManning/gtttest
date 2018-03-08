@@ -9,4 +9,4 @@ ADD . /work
 WORKDIR /work
 
 COPY test.py .
-CMD['python', 'test.py']
+CMD['python', './test.py']
