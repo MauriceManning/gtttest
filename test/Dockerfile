@@ -1,4 +1,8 @@
 FROM python:3.6
+RUN pip install -r requirements.txt
+
 ADD . /work
 WORKDIR /work
-RUN pip install -r requirements.txt
+
+COPY test.py .
+CMD['python', 'test.py']
