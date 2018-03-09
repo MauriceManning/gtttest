@@ -1,15 +1,14 @@
-version: '2'
+version: '3'
 services:
     test:
-        context: .
-        build: /test
+        build: ./test
         image: test:1.0
-        dockerfile: /test/Dockerfile
+        #dockerfile: /test/Dockerfile
         container_name: "test"
         environment:
             - FOO=bar
         volumes:
-            - /test/:/code/test/:rw
+            - /Users/mmanning/Dev/code/gtt/test/:/code/test/:rw
         ports:
             - 3000:3000
             - 9000:9000
@@ -17,33 +16,34 @@ services:
             - mongodb
         depends_on:
             - mongodb
+            - pgdb
     
     mongodb:
+        restart: always
         image: bitnami/mongodb:latest
         container_name: "mongodb"
         environment:
-          - MONGO_DATA_DIR=/data/db
-          - MONGO_LOG_DIR=/dev/null
-          - MONGODB_USERNAME=gtt
-          - MONGODB_PASSWORD=gtt123
-          - MONGODB_DATABASE=ingestdb
+            - MONGODB_USERNAME=gtt
+            - MONGODB_PASSWORD=gtt123
+            - MONGODB_DATABASE=ingestdb
         volumes:
-          - /Users/mauricemanning/Dev/data/mongodb:/bitnami
+            - /Users/mmanning/Dev/data/mongodb:/bitnami
         ports:
             - 27017:27017
-        command: mongod --smallfiles --logpath=/dev/null # --quiet
         
-    postgres:
-      restart: always
-      image: 'bitnami/postgresql:latest'
-      ports:
-        - "5432:5432"
-      environment:
-        - POSTGRES_USER=gtt
-        - POSTGRES_PASSWORD=gtt123
-        - POSTGRES_DB: accounts
-      volumes:
-        - /Users/mauricemanning/Dev/data/postgres:/var/lib/postgresql        
-        
-        
+    pgdb:
+        # https://github.com/bitnami/bitnami-docker-postgresql
+        restart: always
+        image: 'bitnami/postgresql:latest'
+        container_name: "pgdb"
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRESQL_USERNAME=gtt
+            - POSTGRESQL_PASSWORD=password123
+            - MONGODB_ROOT_PASSWORD=password123
+            - POSTGRESQL_DATABASE=accounts
+
+        volumes:
+            - /Users/mmanning/Dev/data/postgres:/var/lib/postgresql        
         
