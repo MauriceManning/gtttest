@@ -12,11 +12,11 @@ from pymongo import MongoClient
 
 
 
-logging.basicConfig(filename='example.log',level=logging.INFO)
+logging.basicConfig(filename='gtt.log',level=logging.INFO)
 
 def mongoconnect():
     client = MongoClient('mongodb://mongodb:27017/')
-    db = client['ingestdb']
+    db = client['gtt']
     db.authenticate('gtt', 'gtt123')
     return client, db
 
@@ -37,8 +37,8 @@ def mongotestinsert():
     post_id2 = db.testcollection.insert_one(post2).inserted_id
     logging.info('inserted two doc: ' + str(post_id2) )
     print('inserted two doc: ' + str(post_id2) )
-
     #pp = pprint.PrettyPrinter(width=41, compact=True)
+    
 def mongoretrieve():
     # retrieve all docs in collection
     print('list testcollection')
@@ -54,12 +54,12 @@ def postgresconnect():
     try: 
         import time
         time.sleep(7)
-        conn = psycopg2.connect(database='accounts', user='gtt', password='password123', host='pgdb')
+        conn = psycopg2.connect(database='gtt', user='gtt', password='gtt123', host='pgdb')
         #conn = psycopg2.connect(user='posgres', password='password123', host='pgdb')
         #cursor = conn.cursor()
         print('connected to postgres')
     except:
-        print('postgres connect failed.')
+        logging.info('connect to postgres failed')
 
     
 if __name__ == '__main__':
