@@ -10,10 +10,9 @@ ADD . /work
 WORKDIR /work
 
 COPY test.py .
-COPY testcrontab .
 RUN chmod a+x ./test.py
 
 
-#CMD ["python", "./test.py"]
-RUN crontab ./testcrontab
-ENTRYPOINT cron -f
+CMD ["python", "./test.py"]
+#RUN crontab ./testcrontab
+#ENTRYPOINT cron -f
