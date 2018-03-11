@@ -25,7 +25,7 @@ services:
         environment:
             - MONGODB_USERNAME=gtt
             - MONGODB_PASSWORD=gtt123
-            - MONGODB_DATABASE=ingestdb
+            - MONGODB_DATABASE=gtt
         volumes:
             - /Users/mmanning/Dev/data/mongodb:/bitnami
         ports:
@@ -40,9 +40,9 @@ services:
             - "5432:5432"
         environment:
             - POSTGRESQL_USERNAME=gtt
-            - POSTGRESQL_PASSWORD=password123
+            - POSTGRESQL_PASSWORD=gtt123
             - MONGODB_ROOT_PASSWORD=password123
-            - POSTGRESQL_DATABASE=accounts
+            - POSTGRESQL_DATABASE=gtt
 
         volumes:
             - /Users/mmanning/Dev/data/postgres:/var/lib/postgresql        
