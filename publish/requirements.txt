@@ -2,3 +2,4 @@ pymongo
 psycopg2
 pprint
 birdy
+apscheduler
