@@ -66,14 +66,14 @@ if __name__ == '__main__':
     
     # initial mongodb tests
     mongoclient, mongodb = mongoconnect()
-    mongolistcollections(mongodb)
-    mongotestinsert(mongodb)
+    mongolistcollections()
+    mongotestinsert()
     
     # test connection to postgres
     postgresconnect()
     
     scheduler = BlockingScheduler()
-    scheduler.add_job(mongoretrieve(mongodb), 'interval', seconds=3)
+    scheduler.add_job(mongoretrieve, 'interval', seconds=3)
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
 
     try:
