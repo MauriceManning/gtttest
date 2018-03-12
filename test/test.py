@@ -18,29 +18,29 @@ def mongoconnect():
     db.authenticate('gtt', 'gtt123')
     return client, db
 
-def mongolistcollections(db):
+def mongolistcollections():
     #list existing collections
-    print( 'collections: ' + str(db.collection_names(include_system_collections=False) ) )
-    testcollection = db.testcollection
-    posts = db.posts
+    print( 'collections: ' + str(mongodb.collection_names(include_system_collections=False) ) )
+    testcollection = mongodb.testcollection
+    posts = mongodb.posts
     
-def mongotestinsert(db):
+def mongotestinsert():
     #test insert into mongodb
     post1 = {"foo": "bar"}
     post2 = {"foo2": "bar2"}
-    post_id1 = db.testcollection.insert_one(post1).inserted_id
+    post_id1 = mongodb.testcollection.insert_one(post1).inserted_id
     logging.info('inserted one doc: ' + str(post_id1) )
     print('inserted one doc: ' + str(post_id1) )
 
-    post_id2 = db.testcollection.insert_one(post2).inserted_id
+    post_id2 = mongodb.testcollection.insert_one(post2).inserted_id
     logging.info('inserted two doc: ' + str(post_id2) )
     print('inserted two doc: ' + str(post_id2) )
     #pp = pprint.PrettyPrinter(width=41, compact=True)
     
-def mongoretrieve(db):
+def mongoretrieve():
     # retrieve all docs in collection
     print('list testcollection')
-    for doc in db.testcollection.find():
+    for doc in mongodb.testcollection.find():
         pprint.pprint( doc )
 
     #print('list posts')
@@ -61,6 +61,8 @@ def postgresconnect():
 
     
 if __name__ == '__main__':
+    
+    global mongodb
     
     # initial mongodb tests
     mongoclient, mongodb = mongoconnect()
