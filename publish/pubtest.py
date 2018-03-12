@@ -6,16 +6,44 @@ import json
 import time
 import datetime
 import logging
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 
-logging.debug( 'test publish to GnuSocial')
+from birdy.twitter import UserClient  
 
-# get the credentials for this gene
-#client = UserClient(acctCredentials.consumerkey, acctCredentials.consumersecret, acctCredentials.accesstoken, acctCredentials.accesstokenseecret)
-client = UserClient('537143b467af36c43ba066238b88c915', 'e62fd6b54f04b65b4790737b493a23be', acctCredentials.accesstoken, acctCredentials.accesstokenseecret)
+class GnuClient(UserClient):
+    def __init__(self, consumer_key, consumer_secret, access_token=None, access_token_secret=None):
+        super(GnuClient, self).__init__(consumer_key, consumer_secret, access_token, access_token_secret)
+        self.base_api_url = 'http://172.104.49.249:8000/%s'
 
-response = client.api.statuses.update.post(status='test this publish')
+    def construct_resource_url(self, path):
+        paths = path.split('/')
+        return '%s/%s.json' % (self.base_api_url % paths[0], '/'.join(paths[1:]))
 
-logging.info( 'post_tweet post id: %s', response.data.id)
-print ("response.data.entities : {0}".format(response.data.entities))
-print ("created at: {0}".format(response.data.status))
+
+def posttweet():
+  response = client.api.statuses.update.post(status="dckrtest")
+      
+if __name__ == "__main__":
+
+    logging.debug( 'test publish to GnuSocial')
+    credentials = ("dcb80dabca4abbf7d7ab433e9a664db9",
+                   "a788435690cd0249cc85be8dfe3b2a88",
+                   "f1f24e064efaf74e1d1fe5ab86044770",
+                   "eecd2dd0b03d892fb798ac87ab3f8c26")
+    # p = post()
+    # client = p.get_user_client(credentials, 1)
+    client = GnuClient(*credentials)
+    #response = client.api.statuses.update.post(status="Test4")
+
+    
+    scheduler = BlockingScheduler()
+    scheduler.add_job(tick, 'interval', seconds=5)
+    print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
+
+    try:
+        scheduler.start()
+        posttweet(client)
+
+    except (KeyboardInterrupt, SystemExit):
+        pass
