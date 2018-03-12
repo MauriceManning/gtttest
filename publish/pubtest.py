@@ -21,8 +21,9 @@ class GnuClient(UserClient):
         return '%s/%s.json' % (self.base_api_url % paths[0], '/'.join(paths[1:]))
 
 
-def posttweet():
+def posttweet(client):
   response = client.api.statuses.update.post(status="dckrtest")
+  print('post response: ' + str(response) )
       
 if __name__ == "__main__":
 
@@ -31,8 +32,7 @@ if __name__ == "__main__":
                    "a788435690cd0249cc85be8dfe3b2a88",
                    "f1f24e064efaf74e1d1fe5ab86044770",
                    "eecd2dd0b03d892fb798ac87ab3f8c26")
-    # p = post()
-    # client = p.get_user_client(credentials, 1)
+
     client = GnuClient(*credentials)
     #response = client.api.statuses.update.post(status="Test4")
 
@@ -42,6 +42,7 @@ if __name__ == "__main__":
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
 
     try:
+        print('start scheduler ') 
         scheduler.start()
         
     except (KeyboardInterrupt, SystemExit):
