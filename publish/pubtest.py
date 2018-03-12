@@ -8,9 +8,10 @@ import datetime
 import logging
 import os
 from apscheduler.schedulers.blocking import BlockingScheduler
-
-
 from birdy.twitter import UserClient  
+
+counter = 0
+logging.basicConfig(filename='gtt.log',level=logging.INFO)
 
 class GnuClient(UserClient):
     def __init__(self, consumer_key, consumer_secret, access_token=None, access_token_secret=None):
@@ -23,9 +24,10 @@ class GnuClient(UserClient):
 
 
 def posttweet():
-  response = client.api.statuses.update.post(status="dckrtest" + str(counter) )
-  print('post response ' + str(counter) + ' : ' + str(response) )
-  counter = counter + 1
+    response = client.api.statuses.update.post(status="dckrtest" + str(counter) )
+    print('post response ' + str(counter) + ' : ' + str(response) )
+    counter = counter + 1
+    logging.info('Tweet published')
       
 if __name__ == "__main__":
     
@@ -41,7 +43,6 @@ if __name__ == "__main__":
     client = GnuClient(*credentials)
     #response = client.api.statuses.update.post(status="Test4")
 
-    counter = 0
     scheduler = BlockingScheduler()
     scheduler.add_job(posttweet, 'interval', seconds=5)
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
