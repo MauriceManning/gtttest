@@ -9,10 +9,8 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 from pymongo import MongoClient
 
-
-
-
 logging.basicConfig(filename='gtt.log',level=logging.INFO)
+
 
 def mongoconnect():
     client = MongoClient('mongodb://mongodb:27017/')
@@ -26,7 +24,7 @@ def mongolistcollections(db):
     testcollection = db.testcollection
     posts = db.posts
     
-def mongotestinsert():
+def mongotestinsert(db):
     #test insert into mongodb
     post1 = {"foo": "bar"}
     post2 = {"foo2": "bar2"}
@@ -39,10 +37,10 @@ def mongotestinsert():
     print('inserted two doc: ' + str(post_id2) )
     #pp = pprint.PrettyPrinter(width=41, compact=True)
     
-def mongoretrieve():
+def mongoretrieve(db):
     # retrieve all docs in collection
     print('list testcollection')
-    for doc in testcollection.find():
+    for doc in db.testcollection.find():
         pprint.pprint( doc )
 
     #print('list posts')
@@ -73,12 +71,10 @@ if __name__ == '__main__':
     postgresconnect()
     
     scheduler = BlockingScheduler()
-    scheduler.add_job(tick, 'interval', seconds=3)
+    scheduler.add_job(mongoretrieve(mongodb), 'interval', seconds=3)
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
 
     try:
         scheduler.start()
-        mongoretrieve(mongodb)
-
     except (KeyboardInterrupt, SystemExit):
         pass
