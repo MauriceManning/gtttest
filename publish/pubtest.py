@@ -30,7 +30,7 @@ def posttweet():
 if __name__ == "__main__":
     
     global client
-    global counter = 0
+    global counter
 
     logging.debug( 'test publish to GnuSocial')
     credentials = ("dcb80dabca4abbf7d7ab433e9a664db9",
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     client = GnuClient(*credentials)
     #response = client.api.statuses.update.post(status="Test4")
 
-    
+    counter = 0
     scheduler = BlockingScheduler()
     scheduler.add_job(posttweet, 'interval', seconds=5)
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
