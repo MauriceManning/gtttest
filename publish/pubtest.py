@@ -24,6 +24,7 @@ class GnuClient(UserClient):
 
 
 def posttweet():
+    global counter
     response = client.api.statuses.update.post(status="dckrtest" + str(counter) )
     print('post response ' + str(counter) + ' : ' + str(response) )
     counter = counter + 1
@@ -32,7 +33,6 @@ def posttweet():
 if __name__ == "__main__":
     
     global client
-    global counter
 
     logging.debug( 'test publish to GnuSocial')
     credentials = ("dcb80dabca4abbf7d7ab433e9a664db9",
