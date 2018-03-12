@@ -21,11 +21,13 @@ class GnuClient(UserClient):
         return '%s/%s.json' % (self.base_api_url % paths[0], '/'.join(paths[1:]))
 
 
-def posttweet(client):
+def posttweet():
   response = client.api.statuses.update.post(status="dckrtest")
   print('post response: ' + str(response) )
       
 if __name__ == "__main__":
+    
+    global client
 
     logging.debug( 'test publish to GnuSocial')
     credentials = ("dcb80dabca4abbf7d7ab433e9a664db9",
@@ -38,7 +40,7 @@ if __name__ == "__main__":
 
     
     scheduler = BlockingScheduler()
-    scheduler.add_job(posttweet(client), 'interval', seconds=5)
+    scheduler.add_job(posttweet(), 'interval', seconds=5)
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
 
     try:
