@@ -6,7 +6,7 @@ RUN pip install -r requirements.txt
 ADD . /work
 WORKDIR /work
 
-COPY test.py .
-RUN chmod a+x ./test.py
+COPY pubtest.py .
+RUN chmod a+x ./pubtest.py
 
 CMD ["python", "./pubtest.py"]
