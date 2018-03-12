@@ -26,8 +26,6 @@ services:
         volumes:
             - /Users/mmanning/Dev/code/gtt/publish/:/code/publish/:rw
         ports:
-            - 3000:3000
-            - 9000:9000
         links:
             - mongodb
         depends_on:
