@@ -3,7 +3,6 @@ services:
     test:
         build: ./test
         image: test:1.0
-        #dockerfile: /test/Dockerfile
         container_name: "test"
         environment:
             - FOO=bar
@@ -17,7 +16,24 @@ services:
         depends_on:
             - mongodb
             - pgdb
-    
+
+    publish:
+        build: ./publish
+        image: publish:1.0
+        container_name: "publish"
+        environment:
+            - FOO=bar
+        volumes:
+            - /Users/mmanning/Dev/code/gtt/publish/:/code/publish/:rw
+        ports:
+            - 3000:3000
+            - 9000:9000
+        links:
+            - mongodb
+        depends_on:
+            - mongodb
+            - pgdb
+
     mongodb:
         restart: always
         image: bitnami/mongodb:latest
