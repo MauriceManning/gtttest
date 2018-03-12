@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     
     scheduler = BlockingScheduler()
-    scheduler.add_job(posttweet(), 'interval', seconds=5)
+    scheduler.add_job(posttweet, 'interval', seconds=5)
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
 
     try:
