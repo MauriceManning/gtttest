@@ -7,7 +7,8 @@ services:
         environment:
             - FOO=bar
         volumes:
-            - /Users/mmanning/Dev/code/gtt/test/:/code/test/:rw
+            - ${HOME}/Dev/code/gtt/test/:/code/test/:rw
+            - ${HOME}/Dev/code/gtt/logs/:/code/logs/:rw
         ports:
             - 3000:3000
             - 9000:9000
@@ -24,7 +25,8 @@ services:
         environment:
             - FOO=bar
         volumes:
-            - /Users/mmanning/Dev/code/gtt/publish/:/code/publish/:rw
+            - ${HOME}/Dev/code/gtt/publish/:/code/publish/:rw
+            - ${HOME}/Dev/code/gtt/logs/:/code/logs/:rw
         ports:
             - 3001:3001
             - 9001:9001
@@ -43,7 +45,7 @@ services:
             - MONGODB_PASSWORD=gtt123
             - MONGODB_DATABASE=gtt
         volumes:
-            - /Users/mmanning/Dev/data/mongodb:/bitnami
+            - ${HOME}/Dev/data/mongodb:/bitnami
         ports:
             - 27017:27017
         
@@ -61,5 +63,5 @@ services:
             - POSTGRESQL_DATABASE=gtt
 
         volumes:
-            - /Users/mmanning/Dev/data/postgres:/var/lib/postgresql        
+            - ${HOME}/Dev/data/postgres:/var/lib/postgresql        
         

@@ -11,7 +11,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from birdy.twitter import UserClient  
 
 counter = 0
-logging.basicConfig(filename='gtt.log',level=logging.INFO)
+logging.basicConfig(filename='/code/logs/gtt.log',level=logging.INFO)
 
 class GnuClient(UserClient):
     def __init__(self, consumer_key, consumer_secret, access_token=None, access_token_secret=None):
@@ -48,8 +48,9 @@ if __name__ == "__main__":
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
 
     try:
-        print('start scheduler ') 
+        logging.info('start scheduler ') 
         scheduler.start()
         
     except (KeyboardInterrupt, SystemExit):
+        logging.info('publish halted.')
         pass
