@@ -44,7 +44,7 @@ if __name__ == "__main__":
     #response = client.api.statuses.update.post(status="Test4")
 
     scheduler = BlockingScheduler()
-    scheduler.add_job(posttweet, 'interval', seconds=5)
+    scheduler.add_job(posttweet, 'interval', seconds=30)
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
 
     try:

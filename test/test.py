@@ -61,6 +61,7 @@ def postgresconnect():
         import time
         time.sleep(7)
         postgresconn = psycopg2.connect(database='gtt', user='gtt', password='gtt123', host='pgdb')
+        postgresconn.autocommit = True
         #conn = psycopg2.connect(user='posgres', password='password123', host='pgdb')
         #cursor = conn.cursor()
         logging.info('connected to postgres')
@@ -86,9 +87,17 @@ def createpgtable():
 def insertpgtable():
     try:
         logging.info('insert into  postgres test table')
-        cursor = postgresconn.cursor()
-        postgresconn.autocommit = True
-        cursor.execute( "INSERT INTO test VALUES (1, 'foo', 'bar')" )
+
+        with postgresconn, postgresconn.cursor() as cursor:
+            cursor.execute( "INSERT INTO test VALUES (1, 'foo', 'bar')" )
+            cursor.execute( "INSERT INTO test VALUES (2, 'foo2', 'bar2')" )
+            cursor.execute( "INSERT INTO test VALUES (3, 'foo3', 'bar3')" )
+
+        #cursor = postgresconn.cursor()
+        #postgresconn.autocommit = True
+        #cursor.execute( "INSERT INTO test VALUES (1, 'foo', 'bar')" )
+
+        postgresconn.commit()
         logging.info('insert into  postgres test table completed.')
     except psycopg2.Error as  e:
         if postgresconn:
@@ -127,10 +136,10 @@ if __name__ == '__main__':
     postgresconnect()
     createpgtable()
     insertpgtable()
-    deletepgtable()
+    #deletepgtable()
     
     scheduler = BlockingScheduler()
-    scheduler.add_job(mongoretrieve, 'interval', seconds=3)
+    scheduler.add_job(mongoretrieve, 'interval', seconds=30)
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
 
     try:
