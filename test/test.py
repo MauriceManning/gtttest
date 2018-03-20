@@ -9,9 +9,14 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 from pymongo import MongoClient
 
+# https://docs.python.org/3/howto/logging-cookbook.html
+# set up logging to file 
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M:%S',
+                    filename='/code/logs/gtt.log',
+                    filemode='w')
 
-# configure the logger to use common file for all modules.
-logging.basicConfig(filename='/code/logs/gtt.log',level=logging.INFO)
 
 # connect to the mongodb repository
 def mongoconnect():
@@ -124,7 +129,7 @@ def deletepgtable():
 if __name__ == '__main__':
     
     global mongodb
-    
+
     # initial mongodb tests
     import time
     time.sleep(7)

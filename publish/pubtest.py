@@ -10,8 +10,17 @@ import os
 from apscheduler.schedulers.blocking import BlockingScheduler
 from birdy.twitter import UserClient  
 
+
+# https://docs.python.org/3/howto/logging-cookbook.html
+# set up logging to file
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M:%S',
+                    filename='/code/logs/gtt.log',
+                    filemode='w')
+
+
 counter = 0
-logging.basicConfig(filename='/code/logs/gtt.log',level=logging.INFO)
 
 class GnuClient(UserClient):
     def __init__(self, consumer_key, consumer_secret, access_token=None, access_token_secret=None):
