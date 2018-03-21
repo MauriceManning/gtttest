@@ -63,5 +63,5 @@ services:
             - POSTGRESQL_DATABASE=gtt
 
         volumes:
-            - ${HOME}/Dev/data/postgres:/var/lib/postgresql        
+            - ${HOME}/Dev/data/postgres:/bitnami
         

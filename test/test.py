@@ -60,7 +60,6 @@ def mongoretrieve():
 # connect to the postgres repository
 def postgresconnect():    
 
-    global postgresconn
     # test connection to postgres
     try: 
         import time
@@ -70,6 +69,7 @@ def postgresconnect():
         #conn = psycopg2.connect(user='posgres', password='password123', host='pgdb')
         #cursor = conn.cursor()
         logging.info('connected to postgres')
+        return postgresconn
     except:
         logging.info('connect to postgres failed')
 
@@ -129,6 +129,7 @@ def deletepgtable():
 if __name__ == '__main__':
     
     global mongodb
+    global postgresconn
 
     # initial mongodb tests
     import time
@@ -138,7 +139,7 @@ if __name__ == '__main__':
     mongotestinsert()
     
     # test connection to postgres
-    postgresconnect()
+    postgresconn = postgresconnect()
     createpgtable()
     insertpgtable()
     #deletepgtable()
