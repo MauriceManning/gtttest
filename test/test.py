@@ -9,14 +9,6 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 from pymongo import MongoClient
 
-# https://docs.python.org/3/howto/logging-cookbook.html
-# set up logging to file 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                    datefmt='%m-%d %H:%M:%S',
-                    filename='/code/logs/gtt.log',
-                    filemode='w')
-
 
 # connect to the mongodb repository
 def mongoconnect():
@@ -130,6 +122,15 @@ if __name__ == '__main__':
     
     global mongodb
     global postgresconn
+    global logging
+    
+    # https://docs.python.org/3/howto/logging-cookbook.html
+    # set up logging to file
+    logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(funcName)s():  %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M:%S',
+                    filename='/code/logs/gtt.log',
+                    filemode='w')
 
     # initial mongodb tests
     import time
@@ -151,4 +152,4 @@ if __name__ == '__main__':
     try:
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
-        pass
+       pass
